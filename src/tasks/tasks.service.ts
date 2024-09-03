@@ -16,7 +16,6 @@ export class TasksService {
     try {
       const newTask = this.taskRepository.create(createTaskDto);
       await this.taskRepository.save(newTask);
-
       return newTask;
 
     } catch (error: any) {

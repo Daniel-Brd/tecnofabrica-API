@@ -5,13 +5,13 @@ export class Task {
   @PrimaryGeneratedColumn('uuid')
   id:string;
 
-  @Column()
+  @Column({ type: 'varchar', length: 128 , nullable: false })
   title: string;
 
-  @Column()
+  @Column({ type: 'text', nullable: false })
   description: string;
 
-  @Column()
+  @Column({ type: 'varchar', length: 64 , nullable: false, default: 'PENDING' })
   status: string;
 
   @CreateDateColumn()
