@@ -1,7 +1,10 @@
-import { TypeOrmModuleAsyncOptions, TypeOrmModuleOptions } from "@nestjs/typeorm";
-import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
+import {
+  TypeOrmModuleAsyncOptions,
+  TypeOrmModuleOptions,
+} from '@nestjs/typeorm';
+import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { Task } from "src/tasks/entities/task.entity";
+import { Task } from 'src/tasks/entities/task.entity';
 
 export default <TypeOrmModuleAsyncOptions>{
   imports: [ConfigModule],
@@ -18,7 +21,7 @@ export default <TypeOrmModuleAsyncOptions>{
       password: configService.get('DB_PASSWORD'),
       database: configService.get('DB_DATABASE'),
       entities: [Task],
-      extra:{ ssl: true },
+      extra: { ssl: true },
       synchronize: true,
     };
   },

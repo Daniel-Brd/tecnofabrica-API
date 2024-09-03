@@ -4,6 +4,10 @@ import { DatabaseModule } from './database/database.module';
 import { TasksModule } from './tasks/tasks.module';
 
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true }), DatabaseModule, TasksModule],
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
+    DatabaseModule,
+    TasksModule,
+  ],
 })
 export class AppModule {}

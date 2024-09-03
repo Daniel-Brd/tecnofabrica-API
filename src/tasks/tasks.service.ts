@@ -12,7 +12,6 @@ export class TasksService {
     private taskRepository: Repository<Task>,
   ) {}
   async create(createTaskDto: CreateTaskDto) {
-    
     try {
       const newTask = this.taskRepository.create(createTaskDto);
       await this.taskRepository.save(newTask);
@@ -84,13 +83,13 @@ export class TasksService {
 
   async remove(id: string) {
     try {
-      const task = await this.findById(id)
+      const task = await this.findById(id);
 
       if (!task) {
         throw new HttpException('Task not found', 404);
       }
 
-      await this.taskRepository.delete({id})
+      await this.taskRepository.delete({ id });
 
       return {
         message: 'Task deleted successfully',
