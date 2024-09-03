@@ -42,7 +42,7 @@ export class TasksService {
     }
   }
 
-  async findOne(id: string) {
+  async findById(id: string) {
     try {
       const task = await this.taskRepository.findOne({
         where: { id },
@@ -61,8 +61,25 @@ export class TasksService {
     }
   }
 
-  update(id: number, updateTaskDto: UpdateTaskDto) {
-    return `This action updates a #${id} task`;
+  async update(id: string, updateTaskDto: UpdateTaskDto) {
+    try {
+      await this.findById(id);
+
+      const tempAffected = this.taskRepository.create(updateTaskDto);
+
+      const affected = await this.taskRepository.update(id, tempAffected);
+
+      if (!affected) {
+        throw new HttpException('Something went wrong with update.', 400);
+      }
+
+      return await this.findById(id);
+    } catch (error: any) {
+      throw new HttpException(
+        error.message || 'Internal server error.',
+        error.status || 500,
+      );
+    }
   }
 
   remove(id: number) {
