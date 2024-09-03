@@ -17,18 +17,29 @@ export class TasksService {
       const newTask = this.taskRepository.create(createTaskDto);
       await this.taskRepository.save(newTask);
       return newTask;
-
     } catch (error: any) {
       throw new HttpException(
         error.message || 'Internal server error.',
         error.status || 500,
       );
     }
-    return 'This action adds a new task';
   }
 
-  findAll() {
-    return `This action returns all tasks`;
+  async findAll() {
+    try {
+      const tasks = await this.taskRepository.find();
+
+      if (!tasks) {
+        throw new HttpException('Tasks not found.', 404);
+      }
+
+      return tasks;
+    } catch (error: any) {
+      throw new HttpException(
+        error.message || 'Internal server error.',
+        error.status || 500,
+      );
+    }
   }
 
   findOne(id: number) {
