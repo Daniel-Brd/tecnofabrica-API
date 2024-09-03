@@ -82,7 +82,25 @@ export class TasksService {
     }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} task`;
+  async remove(id: string) {
+    try {
+      const task = await this.findById(id)
+
+      if (!task) {
+        throw new HttpException('Task not found', 404);
+      }
+
+      await this.taskRepository.delete({id})
+
+      return {
+        message: 'Task deleted successfully',
+        // deleted: task, -- use this if you want to show the deleted task
+      };
+    } catch (error: any) {
+      throw new HttpException(
+        error.message || 'Internal server error.',
+        error.status || 500,
+      );
+    }
   }
 }
