@@ -28,7 +28,7 @@ export class TasksService {
     try {
       const tasks = await this.taskRepository.find();
 
-      if (!tasks) {
+      if (!tasks.length) {
         throw new HttpException('Tasks not found.', 404);
       }
 
