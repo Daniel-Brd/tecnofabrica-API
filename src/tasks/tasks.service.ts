@@ -42,8 +42,23 @@ export class TasksService {
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} task`;
+  async findOne(id: string) {
+    try {
+      const task = await this.taskRepository.findOne({
+        where: { id },
+      });
+
+      if (!task) {
+        throw new HttpException('Task not found.', 404);
+      }
+
+      return task;
+    } catch (error: any) {
+      throw new HttpException(
+        error.message || 'Internal server error.',
+        error.status || 500,
+      );
+    }
   }
 
   update(id: number, updateTaskDto: UpdateTaskDto) {
